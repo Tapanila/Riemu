@@ -1,13 +1,28 @@
 ﻿using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Media.Capture;
+using Windows.Media.MediaProperties;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace RiemuCo.Client
 {
@@ -16,26 +31,42 @@ namespace RiemuCo.Client
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private bool _working = false;
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (_working)
+            {
+                return;
+            }
+            _working = true;
+            FacePicture.Visibility = Visibility.Collapsed;
             var cred = new StorageCredentials("riemu", "rsKKZg4bMaToTm+C7ELEFu6brMYMYVC9C9jWebGE+UJOfGVnY94wz2z/0jT+QnF1dqwLv3avBX3RprEhrtoaJQ==");
-            var container = new CloudBlobContainer(new Uri("http://riemu.blob.core.windows.net/images/"), cred);
+            var container = new CloudBlobContainer(new Uri("http://blob.riemu.co/images/"), cred);
 
-            CameraCaptureUI captureUI = new CameraCaptureUI();
-            captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
+            var test = new MediaCapture();
+            await test.InitializeAsync();
+            var file = await KnownFolders.SavedPictures.CreateFileAsync("temp.jpeg", CreationCollisionOption.ReplaceExisting);
+            await test.CapturePhotoToStorageFileAsync(ImageEncodingProperties.CreateJpeg(), file);
 
-            StorageFile photo = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            BitmapImage bitmapImage = new BitmapImage();
+            FileRandomAccessStream stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
+
+            bitmapImage.SetSource(stream);
+
+            Picture.Source = bitmapImage;
+
+            Picture.Source = bitmapImage;
 
             var myUniqueFileName = string.Format("{0}.jpeg", DateTime.Now.Ticks);
 
             var blob = container.GetBlockBlobReference(myUniqueFileName);
 
-            await blob.UploadFromFileAsync(photo);
+            await blob.UploadFromFileAsync(file);
 
             var subscriptionKey = "c55ecc393a2b4613b568279387cd8569";
 
@@ -56,9 +87,11 @@ namespace RiemuCo.Client
             }
             else
             {
-                MessageDialog dialog = new MessageDialog("Person didn't smiled");
+                MessageDialog dialog = new MessageDialog("Person didn't smile");
                 await dialog.ShowAsync();
             }
+            FacePicture.Visibility = Visibility.Visible;
+            _working = false;
         }
     }
 }

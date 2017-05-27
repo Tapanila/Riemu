@@ -1,0 +1,29 @@
+/* Remove the navbar's default margin-bottom and rounded borders */
+body {
+  background-color: #FFF153;
+}
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+#main-image-container{
+  position: absolute;
+  top: 50%;
+  transform: translate(-0%,-50%);
+  background-color: #22B8C2;
+}
+.button {
+    background-color: #FFFDDF; /* Green */
+    border: none;
+    border-radius: 5px;
+    color: #2A1E5B;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

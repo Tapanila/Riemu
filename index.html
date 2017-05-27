@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+
   <link href="css/main.css" rel="stylesheet">
 
-  <!-- Azure Storage JavaScript Client Library -->
-  <script src="azure-storage.common.js"></script>
-  <script src="azure-storage.blob.js"></script>
 
 </head>
 <body>
@@ -21,14 +20,16 @@
 
   <div class="row">
     <div class="col-xs-6 col-xs-offset-3" id="main-image-container">
-      <h1>FIND A HUMAN</h1>
-      <p>MAKE PEOPLE HAPPY</p>
-      <label id="label-upload" class="button">PICK A FILE
-        <input type="file" class="inputfile" id="upload-photo">
-      </label>
+      <div class="panel-content-holder">
+        <h1>FIND A HUMAN</h1>
+        <p>MAKE PEOPLE HAPPY</p>
+        <label id="label-upload" class="button">PICK A FILE
+          <input type="file" class="inputfile" id="upload-photo">
+        </label>
+      </div>
       <button class="button" type="button" id="continue">SEND</button>
-
     </div>
+
 
 
 

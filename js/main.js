@@ -22,7 +22,7 @@ function uploadFile(file){
             console.log(xhr.responseText); // handle response.
         }
     };
-    fd.append("upload_file", file);
+    fd.append("", file);
     xhr.send(fd);
 }
 

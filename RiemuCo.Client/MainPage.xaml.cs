@@ -80,16 +80,16 @@ namespace RiemuCo.Client
 
             var response = await client.GetAsync(uri);
             var repsonseString = await response.Content.ReadAsStringAsync();
+            BitmapImage faceImage = null;
             if (repsonseString == "true")
             {
-                MessageDialog dialog = new MessageDialog("Person smiled");
-                await dialog.ShowAsync();
+                faceImage = new BitmapImage(new Uri("ms-appx://riemuco.cleint/Assets/happy.png"));
             }
             else
             {
-                MessageDialog dialog = new MessageDialog("Person didn't smile");
-                await dialog.ShowAsync();
+                faceImage = new BitmapImage(new Uri("ms-appx://riemuco.cleint/Assets/sad.png"));
             }
+            FacePicture.Source = faceImage;
             FacePicture.Visibility = Visibility.Visible;
             _working = false;
         }

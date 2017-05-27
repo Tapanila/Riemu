@@ -56,6 +56,10 @@ namespace RiemuCo.Api.Controllers
 
             Emotion[] emotionResult;
             emotionResult = await emotionServiceClient.RecognizeAsync(imageUrl);
+            if (emotionResult.Length == 0)
+            {
+                return false;
+            }
             if (emotionResult[0].Scores.Happiness > 0.8)
             {
                 return true;

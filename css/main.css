@@ -59,3 +59,9 @@ body {
 #continue {
   float: right;
 }
+#send-button-container {
+  position: absolute;
+  margin: 0;
+  top:60%;
+  float: left;
+}

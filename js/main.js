@@ -4,10 +4,6 @@ var file;
 
 document.getElementById('upload-photo').addEventListener('change', function(){
     file = this.files[0];
-    console.log("name : " + file.name);
-    console.log("size : " + file.size);
-    console.log("type : " + file.type);
-    console.log(file);
     uploadFile(file);
 }, false);
 
@@ -20,10 +16,25 @@ function uploadFile(file){
         if (xhr.readyState == 4 && xhr.status == 200) {
             // Every thing ok, file uploaded
             console.log(xhr.responseText); // handle response.
+            $('#pick-image-container').hide();
+            if(xhr.responseText === "false"){
+              $('#sad-image-container').show();
+              $('#continue').show();
+            }else{
+              $('#happy-image-container').show();
+              $('#continue').show();
+            }
         }
     };
     fd.append("", file);
     xhr.send(fd);
+
 }
+
+$('#continue').click(function(){
+  $('#pick-image-container').show();
+  $('.emotions').hide();
+});
+
 
 });

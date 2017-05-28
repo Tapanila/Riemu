@@ -21,12 +21,26 @@
 
   <div class="row">
     <div class="col-xs-6 col-xs-offset-3" id="main-image-container">
-        <h1>FIND A HUMAN</h1>
-        <p>AND MAKE PEOPLE HAPPY</p>
-        <label id="label-upload" class="button">PICK A FILE
-          <input type="file" class="inputfile" id="upload-photo">
-        </label>
+      <div class="panel-content-holder" id="pick-image-container">
+          <h1>FIND A HUMAN</h1>
+          <p>AND MAKE THEM HAPPY</p>
+          <label id="label-upload" class="button">PICK A FILE
+            <input type="file" class="inputfile" id="upload-photo">
+          </label>
+        </div>
+
+        <div class="panel-content-holder emotions" id="happy-image-container">
+          <img src="img_assets/happy.png" alt="image-not-found" class="emotion-image">
+        </div>
+
+        <div class="panel-content-holder emotions" id="sad-image-container">
+          <img src="img_assets/sad.png" alt="image-not-found" class="emotion-image">
+        </div>
+        <button class="button emotions" type="button" id="continue">NEXT IMAGE</button>
+
     </div>
+
+
 
 
 

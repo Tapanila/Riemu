@@ -7,7 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Tapped="Grid_Tapped">
+    <Grid Background="#FFF153" Tapped="Grid_Tapped">
+        <Grid Background="#22b8c2" Margin="400,200">
+            <ListView HorizontalAlignment="Center" x:Name="Instructions">
+                <TextBlock Foreground="White" Text="FIND A HUMAN" FontSize="62" FontFamily="Segoe UI Black" />
+                <TextBlock Foreground="White" FontSize="30" Text="AND MAKE THE HAPPY" FontFamily="Segoe UI Black" />
+            </ListView>
+        </Grid>
         <Image Name="Picture" />
         <Image Name="FacePicture" />
     </Grid>

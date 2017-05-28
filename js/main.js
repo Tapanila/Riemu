@@ -5,7 +5,9 @@ var file;
 document.getElementById('upload-photo').addEventListener('change', function(){
     $('#pick-image-container').hide();
     $('#eye-gif-container').show();
+    console.log("tapahtui 1");
     file = this.files[0];
+    console.log(file);
     uploadFile(file);
 }, false);
 

@@ -90,9 +90,10 @@ h1 {
   background-color: #22B8C2;
 }
 
-#sad-image-container {
-
-}
-
-#sad-image-container {
+#upload-photo{
+  z-index: 10;
+  width: 100%;
+height: 100%;
+position: absolute;
+transform: translate(-50%,-88%);
 }

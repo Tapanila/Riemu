@@ -1,4 +1,5 @@
-﻿using Microsoft.ProjectOxford.Common.Contract;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.ProjectOxford.Common.Contract;
 using Microsoft.ProjectOxford.Emotion;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -52,20 +53,24 @@ namespace RiemuCo.Api.Controllers
 
         private async Task<bool> DetectHappiness(string imageUrl)
         {
+            TelemetryClient telemetry = new TelemetryClient();
             EmotionServiceClient emotionServiceClient = new EmotionServiceClient("a57418dab3db465fa9c28a25635bc5a5");
 
             Emotion[] emotionResult;
             emotionResult = await emotionServiceClient.RecognizeAsync(imageUrl);
             if (emotionResult.Length == 0)
             {
+                telemetry.TrackEvent("Not happy");
                 return false;
             }
             if (emotionResult[0].Scores.Happiness > 0.8)
             {
+                telemetry.TrackEvent("Happy");
                 return true;
             }
             else
             {
+                telemetry.TrackEvent("Not happy");
                 return false;
             }
         }

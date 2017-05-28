@@ -39,6 +39,7 @@ namespace RiemuCo.Client
 
         private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Instructions.Visibility = Visibility.Collapsed;
             if (_working)
             {
                 return;
@@ -67,8 +68,19 @@ namespace RiemuCo.Client
             var blob = container.GetBlockBlobReference(myUniqueFileName);
 
             await blob.UploadFromFileAsync(file);
+            string subscriptionKey;
 
-            var subscriptionKey = "c55ecc393a2b4613b568279387cd8569";
+            var random = new Random();
+            var randomValue = random.Next(0, 100);
+            if (randomValue < 50)
+            {
+                subscriptionKey = "949d8494bec349b4ad8618c2039b9e73";
+            } else
+            {
+                subscriptionKey = "32a2298ef9324c9f8ae05e1c83f4b6e8";
+            }
+
+            
 
             var client = new HttpClient();
             var queryString = blob.StorageUri.PrimaryUri.AbsoluteUri;

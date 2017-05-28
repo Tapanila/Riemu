@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "service_riemu_name": {
+            "value": null
+        },
+        "alertrules_Failure_Anomalies___riemu_name": {
+            "value": null
+        },
+        "components_riemu_name": {
+            "value": null
+        },
+        "components_riemu_a79e_name": {
+            "value": null
+        },
+        "storageAccounts_riemu_name": {
+            "value": null
+        },
+        "serverfarms_Riemu_plan_name": {
+            "value": null
+        },
+        "sites_Riemu_api_name": {
+            "value": null
+        },
+        "sites_riemu_name": {
+            "value": null
+        },
+        "config_web_name": {
+            "value": null
+        },
+        "config_web_name_1": {
+            "value": null
+        }
+    }
+}

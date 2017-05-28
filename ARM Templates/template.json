@@ -1,0 +1,498 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "service_riemu_name": {
+            "defaultValue": "riemu",
+            "type": "String"
+        },
+        "alertrules_Failure_Anomalies___riemu_name": {
+            "defaultValue": "Failure Anomalies - riemu",
+            "type": "String"
+        },
+        "components_riemu_name": {
+            "defaultValue": "riemu",
+            "type": "String"
+        },
+        "components_riemu_a79e_name": {
+            "defaultValue": "riemu-a79e",
+            "type": "String"
+        },
+        "storageAccounts_riemu_name": {
+            "defaultValue": "riemu",
+            "type": "String"
+        },
+        "serverfarms_Riemu_plan_name": {
+            "defaultValue": "Riemu-plan",
+            "type": "String"
+        },
+        "sites_Riemu_api_name": {
+            "defaultValue": "Riemu-api",
+            "type": "String"
+        },
+        "sites_riemu_name": {
+            "defaultValue": "riemu",
+            "type": "String"
+        },
+        "config_web_name": {
+            "defaultValue": "Riemu-api/web",
+            "type": "String"
+        },
+        "config_web_name_1": {
+            "defaultValue": "riemu/web",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "sku": {
+                "name": "Developer",
+                "capacity": 1
+            },
+            "name": "[parameters('service_riemu_name')]",
+            "apiVersion": "2016-07-07",
+            "location": "West Europe",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "publisherEmail": "",
+                "publisherName": "[concat(parameters('service_riemu_name'),'Riemu.EU')]",
+                "provisioningState": "Succeeded",
+                "targetProvisioningState": "",
+                "createdAtUtc": "2017-05-27T07:39:45.3270295Z",
+                "runtimeUrl": "[concat('https://', parameters('service_riemu_name'),'.azure-api.net')]",
+                "portalUrl": "[concat('https://', parameters('service_riemu_name'),'.portal.azure-api.net')]",
+                "managementApiUrl": "[concat('https://', parameters('service_riemu_name'),'.management.azure-api.net')]",
+                "scmUrl": "[concat('https://', parameters('service_riemu_name'),'.scm.azure-api.net')]",
+                "addresserEmail": null,
+                "hostnameConfigurations": [],
+                "staticIPs": [
+                    "52.178.114.64"
+                ],
+                "additionalLocations": null,
+                "vpnconfiguration": null,
+                "customProperties": null,
+                "vpnType": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "'.",
+            "type": "microsoft.insights/alertrules",
+            "name": "[parameters('alertrules_Failure_Anomalies___riemu_name')]",
+            "apiVersion": "2014-04-01",
+            "location": "West Europe",
+            "tags": {
+            },
+            "scale": null,
+            "properties": {
+                "name": "[parameters('alertrules_Failure_Anomalies___riemu_name')]",
+                "description": "",
+                "isEnabled": true,
+                "condition": {
+                    "odata.type": "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
+                    "dataSource": {
+                        "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
+                        "resourceUri": "[resourceId('microsoft.insights/components', parameters('components_riemu_name'))]",
+                        "metricName": "advanced::A3108E3D-5E26-44CF-B232-783F5E20EF10::ewAiAEgAeQBwAGUAcgBpAG8AbgBBAHAAcABsAGkAYwBhAHQAaQBvAG4AUwBpAGQAIgA6AG4AdQBsAGwALAAiAEgAeQBwAGUAcgBpAG8AbgBTAHUAYgBqAGUAYwB0AFMAaQBkACIAOgBuAHUAbABsACwAIgBIAHkAcABlAHIAaQBvAG4ATwBiAHMAZQByAHYAZQByAFMAaQBkACIAOgBuAHUAbABsACwAIgBDAHUAcwB0AG8AbQBlAHIAQQBjAGMAbwB1AG4AdABJAGQAIgA6ACIAMAAwADAAMAAwADAAMAAwAC0AMAAwADAAMAAtADAAMAAwADAALQAwADAAMAAwAC0AMAAwADAAMAAwADAAMAAwADAAMAAwADAAIgAsACIAQQBwAHAAbABpAGMAYQB0AGkAbwBuAE4AYQBtAGUAIgA6AG4AdQBsAGwALAAiAEEAcABwAGwAaQBjAGEAdABpAG8AbgBJAGQAIgA6AG4AdQBsAGwALAAiAFAAcgBvAGYAaQBsAGUASQBkACIAOgAwACwAIgBXAGkAbgBkAG8AdwBTAGkAegBlAEkAbgBNAGkAbgB1AHQAZQBzACIAOgA2ADAALAAiAE0AZQB0AHIAaQBjAE4AYQBtAGUAIgA6ACIAIgAsACIAVABoAHIAZQBzAGgAbwBsAGQAIgA6ADIALgAwACwAIgBBAGwAZQByAHQAVABlAG0AcABsAGEAdABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAEkAZAAiADoAIgAiACwAIgBSAHUAbABlAE4AYQBtAGUAIgA6ACIAIgAsACIAUgB1AGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AIgA6ACIAIgAsACIAUgBlAHMAbwB1AHIAYwBlAEkAZAAiADoAbgB1AGwAbAAsACIAUwB1AGIAcwBjAHIAaQBwAHQAaQBvAG4ASQBkACIAOgBuAHUAbABsACwAIgBBAGcAZwByAGUAZwBhAHQAZQBGAHUAbgBjAHQAaQBvAG4AIgA6ACIAIgAsACIAQwBvAG0AcABhAHIAaQBzAG8AbgBPAHAAZQByAGEAdABvAHIAIgA6ACIAewBcACIAQgBhAHMAZQBsAGkAbgBlAFQAaQBtAGUAcwBwAGEAbgBcACIAOgBcACIAMAAwADoANAAwADoAMAAwAFwAIgAsAFwAIgBJAG4AcwBpAGcAaAB0AHMAUwBlAHIAdgBpAGMAZQBMAGEAZwBcACIAOgBcACIAMAAwADoAMAAwADoAMAAwAFwAIgAsAFwAIgBCAHUAZgBmAGUAcgBUAGkAbQBlAFwAIgA6AFwAIgAwADAAOgAwADEAOgAwADAAXAAiACwAXAAiAEIAbABvAGIAUwB0AG8AcgBhAGcAZQBMAG8AZwBnAGkAbgBnAEUAbgBhAGIAbABlAGQAXAAiADoAZgBhAGwAcwBlACwAXAAiAFUAcwBlAHIAUwB1AHAAcAByAGUAcwBzAGkAbwBuAHMAXAAiADoAbgB1AGwAbAAsAFwAIgBQAHIAbwBmAGkAbABlAEkAZABcACIAOgAwACwAXAAiAEUAbQBhAGkAbABUAHkAcABlAFwAIgA6ADAALABcACIAUgBkAGQARgBhAGkAbAB1AHIAZQBzAFMAcABpAGsAZQBUAGgAcgBlAHMAaABvAGwAZABcACIAOgAzAC4AMAAsAFwAIgBSAGEAdwBQAHIAbwBhAGMAdABpAHYAZQBSAHUAbABlAEMAbwBuAGYAaQBnAFwAIgA6AG4AdQBsAGwAfQAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8AQwB1AHMAdABvAG0AIgA6AGYAYQBsAHMAZQAsACIAQwB1AHMAdABvAG0ARQBtAGEAaQBsAHMARQBuAGMAbwBkAGUAZAAiADoAIgAiACwAIgBFAG4AYQBiAGwAZQBTAGUAbgBkAEUAbQBhAGkAbABUAG8ATwB3AG4AZQByAHMAIgA6AGYAYQBsAHMAZQB9AA=="
+                    },
+                    "threshold": 2,
+                    "windowSize": "PT1H"
+                },
+                "action": {
+                    "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleEmailAction",
+                    "sendToServiceOwners": true,
+                    "customEmails": []
+                }
+            },
+            "dependsOn": [
+                "[resourceId('microsoft.insights/components', parameters('components_riemu_name'))]"
+            ]
+        },
+        {
+            "type": "microsoft.insights/components",
+            "kind": "web",
+            "name": "[parameters('components_riemu_name')]",
+            "apiVersion": "2014-04-01",
+            "location": "westeurope",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "ApplicationId": "[parameters('components_riemu_name')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "microsoft.insights/components",
+            "kind": "web",
+            "name": "[parameters('components_riemu_a79e_name')]",
+            "apiVersion": "2014-04-01",
+            "location": "westeurope",
+            "scale": null,
+            "properties": {
+                "ApplicationId": "[parameters('components_riemu_a79e_name')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_riemu_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "westeurope",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "customDomain": {
+                    "name": "[concat('blob.', parameters('storageAccounts_riemu_name'),'.co')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "S1",
+                "tier": "Standard",
+                "size": "S1",
+                "family": "S",
+                "capacity": 1
+            },
+            "kind": "app",
+            "name": "[parameters('serverfarms_Riemu_plan_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "West Europe",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('serverfarms_Riemu_plan_name')]",
+                "numberOfWorkers": 1
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "api",
+            "name": "[parameters('sites_Riemu_api_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "West Europe",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('sites_Riemu_api_name')]",
+                "hostNames": [
+                    "riemu-api.azurewebsites.net"
+                ],
+                "enabledHostNames": [
+                    "riemu-api.azurewebsites.net",
+                    "riemu-api.scm.azurewebsites.net"
+                ],
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_Riemu_api_name'),'riemu-api.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(parameters('sites_Riemu_api_name'),'riemu-api.scm.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_Riemu_plan_name'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_Riemu_plan_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[parameters('sites_riemu_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "West Europe",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('sites_riemu_name')]",
+                "hostNames": [
+                    "www.riemu.co",
+                    "riemu.co",
+                    "riemu.azurewebsites.net"
+                ],
+                "enabledHostNames": [
+                    "www.riemu.co",
+                    "riemu.co",
+                    "riemu.azurewebsites.net",
+                    "riemu.scm.azurewebsites.net"
+                ],
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat('www.', parameters('sites_riemu_name'),'.co')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(parameters('sites_riemu_name'),'.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(parameters('sites_riemu_name'),'.co')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(parameters('sites_riemu_name'),'.scm.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_Riemu_plan_name'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_Riemu_plan_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/a2587a35-edb0-444e-aa5e-ab44c97ef677/resourceGroups/angelhack/providers/Microsoft.Web/sites/Riemu-api/config/web'.",
+            "type": "Microsoft.Web/sites/config",
+            "name": "[parameters('config_web_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "West Europe",
+            "tags": {
+                "hidden-related:/subscriptions/a2587a35-edb0-444e-aa5e-ab44c97ef677/resourceGroups/angelhack/providers/Microsoft.Web/serverfarms/Riemu-plan": "empty"
+            },
+            "scale": null,
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "pythonVersion": "",
+                "nodeVersion": "",
+                "linuxFxVersion": "",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": true,
+                "remoteDebuggingVersion": "VS2015",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$Riemu-api",
+                "publishingPassword": null,
+                "appSettings": null,
+                "metadata": null,
+                "connectionStrings": null,
+                "machineKey": null,
+                "handlerMappings": null,
+                "documentRoot": null,
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "javaVersion": null,
+                "javaContainer": null,
+                "javaContainerVersion": null,
+                "appCommandLine": "",
+                "managedPipelineMode": 0,
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "runtimeADUser": null,
+                "runtimeADUserPassword": null,
+                "loadBalancing": 1,
+                "routingRules": [],
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "limits": null,
+                "autoHealEnabled": false,
+                "autoHealRules": {
+                    "triggers": null,
+                    "actions": null
+                },
+                "tracingOptions": null,
+                "vnetName": "",
+                "siteAuthEnabled": false,
+                "siteAuthSettings": {
+                    "enabled": null,
+                    "unauthenticatedClientAction": null,
+                    "tokenStoreEnabled": null,
+                    "allowedExternalRedirectUrls": null,
+                    "defaultProvider": null,
+                    "clientId": null,
+                    "clientSecret": null,
+                    "issuer": null,
+                    "allowedAudiences": null,
+                    "additionalLoginParams": null,
+                    "isAadAutoProvisioned": false,
+                    "googleClientId": null,
+                    "googleClientSecret": null,
+                    "googleOAuthScopes": null,
+                    "facebookAppId": null,
+                    "facebookAppSecret": null,
+                    "facebookOAuthScopes": null,
+                    "twitterConsumerKey": null,
+                    "twitterConsumerSecret": null,
+                    "microsoftAccountClientId": null,
+                    "microsoftAccountClientSecret": null,
+                    "microsoftAccountOAuthScopes": null
+                },
+                "cors": {
+                    "allowedOrigins": [
+                        "http://riemu.co",
+                        "https://riemu.co"
+                    ]
+                },
+                "push": null,
+                "apiDefinition": {
+                    "url": "https://riemu-api.azurewebsites.net/swagger/docs/v1"
+                },
+                "autoSwapSlotName": null,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_Riemu_api_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "name": "[parameters('config_web_name_1')]",
+            "apiVersion": "2015-08-01",
+            "location": "West Europe",
+            "scale": null,
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "",
+                "pythonVersion": "",
+                "nodeVersion": "",
+                "linuxFxVersion": "",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2012",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$riemu",
+                "publishingPassword": null,
+                "appSettings": null,
+                "metadata": null,
+                "connectionStrings": null,
+                "machineKey": null,
+                "handlerMappings": null,
+                "documentRoot": null,
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "javaVersion": null,
+                "javaContainer": null,
+                "javaContainerVersion": null,
+                "appCommandLine": "",
+                "managedPipelineMode": 0,
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "runtimeADUser": null,
+                "runtimeADUserPassword": null,
+                "loadBalancing": 1,
+                "routingRules": [],
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "limits": null,
+                "autoHealEnabled": false,
+                "autoHealRules": {
+                    "triggers": null,
+                    "actions": null
+                },
+                "tracingOptions": null,
+                "vnetName": "",
+                "siteAuthEnabled": false,
+                "siteAuthSettings": {
+                    "enabled": null,
+                    "unauthenticatedClientAction": null,
+                    "tokenStoreEnabled": null,
+                    "allowedExternalRedirectUrls": null,
+                    "defaultProvider": null,
+                    "clientId": null,
+                    "clientSecret": null,
+                    "issuer": null,
+                    "allowedAudiences": null,
+                    "additionalLoginParams": null,
+                    "isAadAutoProvisioned": false,
+                    "googleClientId": null,
+                    "googleClientSecret": null,
+                    "googleOAuthScopes": null,
+                    "facebookAppId": null,
+                    "facebookAppSecret": null,
+                    "facebookOAuthScopes": null,
+                    "twitterConsumerKey": null,
+                    "twitterConsumerSecret": null,
+                    "microsoftAccountClientId": null,
+                    "microsoftAccountClientSecret": null,
+                    "microsoftAccountOAuthScopes": null
+                },
+                "cors": null,
+                "push": null,
+                "apiDefinition": null,
+                "autoSwapSlotName": null,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_riemu_name'))]"
+            ]
+        }
+    ]
+}
